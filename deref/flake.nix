@@ -23,7 +23,9 @@
           programs.nixfmt.enable = true;
         };
         devShells.default = pkgs.mkShell {
-          packages = [ inputs'.nix.packages.default ];
+          packages = [
+            # inputs'.nix.packages.default
+          ];
         };
       };
     };
