@@ -10,29 +10,33 @@
 
   description = "treefmt-nix broken on flakes";
 
-  outputs = inputs @ {
-    flake-parts,
-    # such formatting
-                     ...  }:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
-      imports = [inputs.treefmt-nix.flakeModule];
-      perSystem = { inputs', pkgs, ... }: {
-        treefmt = {
-          package = inputs'.treefmt.packages.default;
-          projectRootFile = "flake.nix";
-          programs.nixfmt.enable = true;
+  outputs =
+    inputs@{
+      flake-parts,
+      # such formatting
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+      imports = [ inputs.treefmt-nix.flakeModule ];
+      perSystem =
+        { inputs', pkgs, ... }:
+        {
+          treefmt = {
+            package = inputs'.treefmt.packages.default;
+            projectRootFile = "flake.nix";
+            programs.nixfmt.enable = true;
+          };
+          devShells.bad = pkgs.mkShell {
+            packages = [
+              inputs'.nix224.packages.default
+            ];
+          };
+          devShells.good = pkgs.mkShell {
+            packages = [
+              inputs'.nix225.packages.default
+            ];
+          };
         };
-        devShells.bad = pkgs.mkShell {
-          packages = [
-            inputs'.nix224.packages.default
-          ];
-        };
-        devShells.good = pkgs.mkShell {
-          packages = [
-            inputs'.nix225.packages.default
-          ];
-        };
-      };
     };
 }
