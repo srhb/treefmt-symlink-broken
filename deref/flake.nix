@@ -23,10 +23,14 @@
           projectRootFile = "flake.nix";
           programs.nixfmt.enable = true;
         };
-        devShells.default = pkgs.mkShell {
+        devShells.bad = pkgs.mkShell {
+          packages = [
+            inputs'.nix224.packages.default
+          ];
+        };
+        devShells.good = pkgs.mkShell {
           packages = [
             inputs'.nix225.packages.default
-            # inputs'.nix224.packages.default
           ];
         };
       };
