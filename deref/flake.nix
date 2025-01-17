@@ -25,8 +25,8 @@
         };
         devShells.default = pkgs.mkShell {
           packages = [
-            # inputs'.nix225.packages.default
-            inputs'.nix224.packages.default
+            inputs'.nix225.packages.default
+            # inputs'.nix224.packages.default
           ];
         };
       };
